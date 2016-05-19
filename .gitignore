@@ -1,0 +1,10 @@
+.DS_Store
+/packer_cache/
+/output-*/*
+*.box
+*.iso
+/test/.vagrant
+/test/html
+/test/html/*
+test/magento1
+test/magento2

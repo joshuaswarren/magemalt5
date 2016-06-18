@@ -17,13 +17,13 @@ add-apt-repository -y ppa:ondrej/php5-5.6
 add-apt-repository -y ppa:brightbox/ruby-ng
 add-apt-repository -y ppa:ondrej/php
 apt-get update
-apt-get install -y --force-yes php5.6 php5.6-mysql php5.6-fpm php5.6-cli php5.6-xsl php5.6-intl php5.6-mcrypt php5.6-curl php5.6-gd php5.6-mbstring php5.6-zip
+apt-get install -y --force-yes php5.6 php5.6-mysql php5.6-fpm php5.6-cli php5.6-xsl php5.6-intl php5.6-mcrypt php5.6-curl php5.6-gd php5.6-mbstring php5.6-zip php5.6-sqlite
 apt-get install -y --force-yes git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 apt-get install -y --force-yes ruby2.2 ruby2.2-dev
 apt-get install -y --force-yes libgd-tools
 apt-get install -y --force-yes ant
 apt-get install -y --force-yes php-gettext php-intl
-apt-get install -y --force-yes php7-intl
+apt-get install -y --force-yes php5.6-intl
 
 apt-get install -y ruby-sass ruby-compass
 
@@ -47,8 +47,8 @@ composer config --global process-timeout 2000
 apt-get install -y beanstalkd
 apt-get install -y nodejs
 apt-get install -y npm
-apt-get install -y php5-mcrypt
-apt-get install -y php5-curl
+apt-get install -y php5.6-mcrypt
+apt-get install -y php5.6-curl
 
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
 add-apt-repository 'deb http://download.nus.edu.sg/mirror/mariadb/repo/10.0/ubuntu trusty main'
@@ -60,11 +60,11 @@ apt-get install -y adminer phpmyadmin
 
 apt-get install -y postgresql-9.3
 
-apt-get install -y sqlite php5-sqlite libsqlite3-dev
+apt-get install -y sqlite php5.6-sqlite libsqlite3-dev
 
-apt-get install -y php5-redis
+apt-get install -y php5.6-redis
 
-apt-get install -y php5-memcache php5-memcached php5-apcu
+apt-get install -y php5.6-memcache php5,6-memcached php5.6-apcu 
 
 apt-get install -y vim grep sed awk sort seq watch curl tree wget
 
@@ -82,7 +82,14 @@ npm update
 gem install mailcatcher
 
 composer global update
-composer gloal require magento/magento2ce
+composer global require magento/magento2ce
+
+composer global require magento-ecg/coding-standard
+
+composer global require squizlabs/php_codesniffer
+
+a2enmod rewrite
+service apache2 restart
 
 wget -O zray.tar.gz http://www.zend.com/en/download/3973?start=true
 tar -zxvf zray.tar.gz
@@ -114,9 +121,16 @@ apt-get install openjdk-7-jre-headless -y
 apt-get install firefox -y
 apt-get install xvfb -y
 
-
 apt-get update
 apt-get -y upgrade
+
+cat <<EOT5 >> /root/.bashrc
+PATH=$PATH:/root/.composer/vendor/bin/
+EOT5
+
+cat <<EOT6 >> /vagrant/.bashrc
+PATH=$PATH:/root/.composer/vendor/bin/
+EOT6
 
 cat <<EOT4 >> /etc/apache2/sites-enabled/000-default.conf
 
@@ -127,5 +141,5 @@ cat <<EOT4 >> /etc/apache2/sites-enabled/000-default.conf
 </Directory>
 EOT4
 
-
+/root/.composer/vendor/bin/phpcs --config-set installed_paths /root/.composer/vendor/magento-ecg/coding-standard
 
